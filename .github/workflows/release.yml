@@ -1,0 +1,34 @@
+name: Build Electron App (The Golden Fur)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-2025
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+  
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js environment
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      # 3. Prepare Dependencies
+      - name: Prepare Dependencies
+        run: git clone --depth=1 https://${{ secrets.GITHUB_TOKEN }}@github.com/carlodandan/the-golden-fur && cd the-golden-fur && pnpm install
+
+      # 4. Build the application (Electron Forge make)
+      - name: Build
+        run: cd the-golden-fur && pnpm run publish
