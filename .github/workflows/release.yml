@@ -24,7 +24,7 @@ jobs:
       # 3. Install dependencies cleanly
       - name: Install Dependencies
         run: |
-          git clone --depth=1 https://${{ secrets.GITHUB_TOKEN }}@github.com/carlodandan/the-golden-fur
+          git clone --depth=1 https://${{ secrets.PERSONAL_TOKEN }}@github.com/carlodandan/the-golden-fur
           cd the-golden-fur && pnpm install
 
       # 4. Build the application (Electron Forge make)
