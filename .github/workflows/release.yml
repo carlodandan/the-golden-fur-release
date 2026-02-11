@@ -25,7 +25,12 @@ jobs:
       - name: Install Dependencies
         run: |
           git clone --depth=1 https://${{ secrets.PERSONAL_TOKEN }}@github.com/carlodandan/the-golden-fur
-          cd the-golden-fur && pnpm install
+          cd the-golden-fur
+          touch .env
+          echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> .env
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> .env
+          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
+          pnpm install
 
       # 4. Build the application (Electron Forge make)
       # This runs the 'make' script from your package.json
